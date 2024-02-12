@@ -10,30 +10,42 @@ public class Entity {
     // Static variables
     public static final double SAPLING_ACTION_ANIMATION_PERIOD = 1.000; // have to be in sync since grows and gains health at same time
     public static final int SAPLING_HEALTH_LIMIT = 5;
+
     public static final String STUMP_KEY = "stump";
-    public static final int STUMP_NUM_PROPERTIES = 0;
-    public static final String SAPLING_KEY = "sapling";
-    public static final int SAPLING_HEALTH = 0;
-    public static final int SAPLING_NUM_PROPERTIES = 1;
     public static final String OBSTACLE_KEY = "obstacle";
-    public static final int OBSTACLE_ANIMATION_PERIOD = 0;
-    public static final int OBSTACLE_NUM_PROPERTIES = 1;
+    public static final String SAPLING_KEY = "sapling";
     public static final String DUDE_KEY = "dude";
-    public static final int DUDE_ACTION_PERIOD = 0;
-    public static final int DUDE_ANIMATION_PERIOD = 1;
-    public static final int DUDE_LIMIT = 2;
-    public static final int DUDE_NUM_PROPERTIES = 3;
     public static final String HOUSE_KEY = "house";
-    public static final int HOUSE_NUM_PROPERTIES = 0;
     public static final String FAIRY_KEY = "fairy";
-    public static final int FAIRY_ANIMATION_PERIOD = 0;
-    public static final int FAIRY_ACTION_PERIOD = 1;
-    public static final int FAIRY_NUM_PROPERTIES = 2;
     public static final String TREE_KEY = "tree";
-    public static final int TREE_ANIMATION_PERIOD = 0;
-    public static final int TREE_ACTION_PERIOD = 1;
-    public static final int TREE_HEALTH = 2;
+
+
+
+    public static final int SAPLING_NUM_PROPERTIES = 1;
+    public static final int STUMP_NUM_PROPERTIES = 0;
+    public static final int OBSTACLE_NUM_PROPERTIES = 1;
+    public static final int DUDE_NUM_PROPERTIES = 3;
+    public static final int HOUSE_NUM_PROPERTIES = 0;
     public static final int TREE_NUM_PROPERTIES = 3;
+    public static final int FAIRY_NUM_PROPERTIES = 2;
+
+
+    public static final int DUDE_ACTION_PERIOD = 0;
+    public static final int FAIRY_ACTION_PERIOD = 1;
+    public static final int TREE_ACTION_PERIOD = 1;
+
+    public static final int DUDE_ANIMATION_PERIOD = 1;
+    public static final int FAIRY_ANIMATION_PERIOD = 0;
+    public static final int OBSTACLE_ANIMATION_PERIOD = 0;
+    public static final int TREE_ANIMATION_PERIOD = 0;
+
+    public static final int DUDE_LIMIT = 2;
+
+
+    public static final int TREE_HEALTH = 2;
+    public static final int SAPLING_HEALTH = 0;
+
+
     public static final double TREE_ANIMATION_MAX = 0.600;
     public static final double TREE_ANIMATION_MIN = 0.050;
     public static final double TREE_ACTION_MAX = 1.400;
@@ -54,7 +66,8 @@ public class Entity {
     private int health;
     private final int healthLimit;
 
-    public Entity(EntityKind kind, String id, Point position, List<PImage> images, int resourceLimit, int resourceCount, double actionPeriod, double animationPeriod, int health, int healthLimit) {
+    public Entity(EntityKind kind, String id, Point position, List<PImage> images, int resourceLimit, int resourceCount,
+                  double actionPeriod, double animationPeriod, int health, int healthLimit) {
         this.kind = kind;
         this.id = id;
         this.position = position;
