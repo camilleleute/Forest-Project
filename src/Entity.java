@@ -26,10 +26,10 @@ public interface Entity {
             return Optional.empty();
         } else {
             Entity nearest = entities.get(0);
-            int nearestDistance = nearest.position.distanceSquared(pos);
+            int nearestDistance = nearest.getPosition().distanceSquared(pos);
 
             for (Entity other : entities) {
-                int otherDistance = other.position.distanceSquared(pos);
+                int otherDistance = other.getPosition().distanceSquared(pos);
 
                 if (otherDistance < nearestDistance) {
                     nearest = other;
@@ -42,25 +42,37 @@ public interface Entity {
     }
     // Should be in everything i think
     // Default methods
-    default EntityKind getKind() {
-        return this.kind;
-    }
 
-    default String getId() {
-        return id;
-    }
+    String getId();
+    Point getPosition();
+    void setPosition(Point position);
+    void nextImage();
+    PImage getCurrentImage();
+//
+//    default EntityKind getKind() {
+//        return this.kind;
+//    }
+//
+//    default String getId() {
+//        return id;
+//    }
+//
+//    default Point getPosition() {
+//        return position;
+//    }
+//
+//    default void setPosition(Point position) {
+//        this.position = position;
+//    }
+//
+//    default void nextImage() {
+//        this.imageIndex = this.imageIndex + 1;
+//    }
+//    public int getHealth() {
+//        return health;
+//    }
 
-    default Point getPosition() {
-        return position;
-    }
 
-    default void setPosition(Point position) {
-        this.position = position;
-    }
-
-    default void nextImage() {
-        this.imageIndex = this.imageIndex + 1;
-    }
 
 
     public default void scheduleActions(EventScheduler scheduler, WorldModel world, ImageStore imageStore) {
@@ -149,5 +161,4 @@ public interface Entity {
         return new Dude(id, position, actionPeriod, animationPeriod,  resourceLimit, 2, images);
     }
 
-//    boolean isInstance(Object obj);
 }

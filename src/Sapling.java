@@ -23,6 +23,15 @@ public class Sapling extends Plant {
         this.healthLimit = SAPLING_HEALTH_LIMIT;
     }
 
+    @Override
+    public PImage getCurrentImage(){
+        return this.images.get(this.imageIndex % this.images.size());
+    }
+    @Override
+    public void nextImage() {
+        this.imageIndex = this.imageIndex + 1;
+    }
+
     public void executeSaplingActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
         this.health++;
         if (!this.transformPlant(world, scheduler, imageStore)) {

@@ -11,8 +11,9 @@ public abstract class Plant implements Entity{
     public static final int TREE_HEALTH_MIN = 1;
     private final String id;
     private Point position;
-    private final List<PImage> images;
-    private int health;
+    protected final List<PImage> images;
+    protected int imageIndex;
+    public static int health;
 
 
 
@@ -21,6 +22,24 @@ public abstract class Plant implements Entity{
         this.position = position;
         this.images = images;
         this.health = health;
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public Point getPosition() {
+        return position;
+    }
+    @Override
+    public void setPosition(Point position) {
+        this.position = position;
+    }
+
+    public static int getHealth() {
+        return health;
     }
 
     public boolean transformSapling(WorldModel world, EventScheduler scheduler, ImageStore imageStore) {
@@ -49,7 +68,7 @@ public abstract class Plant implements Entity{
         return false;
     }
     public boolean transformPlant(WorldModel world, EventScheduler scheduler, ImageStore imageStore) {
-        if (this.kind == EntityKind.TREE) {
+        if (Object instanceof Tree.class) {
             return this.transformTree(world, scheduler, imageStore);
         } else if (this.kind == EntityKind.SAPLING) {
             return this.transformSapling(world, scheduler, imageStore);

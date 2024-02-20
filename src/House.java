@@ -12,11 +12,34 @@ public class House implements Entity {
     private final String id;
     private Point position;
     private final List<PImage> images;
+    private int imageIndex;
 
     public House(String id, Point position, List<PImage> images) {
         this.id = id;
         this.position = position;
         this.images = images;
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+    @Override
+    public Point getPosition() {
+        return position;
+    }
+
+    @Override
+    public void setPosition(Point position) {
+        this.position = position;
+    }
+    @Override
+    public PImage getCurrentImage(){
+        return this.images.get(this.imageIndex % this.images.size());
+    }
+    @Override
+    public void nextImage() {
+        this.imageIndex = this.imageIndex + 1;
     }
 
 }

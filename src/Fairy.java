@@ -14,6 +14,7 @@ public class Fairy implements Entity{
     private final List<PImage> images;
     private final double actionPeriod;
     private final double animationPeriod;
+    private int imageIndex;
 
     public Fairy(String id, Point position, double actionPeriod, double animationPeriod, List<PImage> images) {
         this.id = id;
@@ -21,6 +22,28 @@ public class Fairy implements Entity{
         this.images = images;
         this.actionPeriod = FAIRY_ACTION_PERIOD;
         this.animationPeriod = FAIRY_ANIMATION_PERIOD;
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+    @Override
+    public Point getPosition() {
+        return position;
+    }
+
+    @Override
+    public void setPosition(Point position) {
+        this.position = position;
+    }
+    @Override
+    public PImage getCurrentImage(){
+        return this.images.get(this.imageIndex % this.images.size());
+    }
+    @Override
+    public void nextImage() {
+        this.imageIndex = this.imageIndex + 1;
     }
 
     public Point nextPositionFairy(WorldModel world, Point destPos) {
@@ -53,7 +76,7 @@ public class Fairy implements Entity{
     }
 
     public void executeFairyActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
-        Optional<Entity> fairyTarget = world.findNearest(this.position, new ArrayList<>(List.of(EntityKind.STUMP)));
+        Optional<Entity> fairyTarget = world.findNearest(this.position, new ArrayList<>(List.of(Stump.class)));
 
         if (fairyTarget.isPresent()) {
             Point tgtPos = fairyTarget.get().getPosition();

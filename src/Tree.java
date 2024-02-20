@@ -23,6 +23,7 @@ public class Tree extends Plant{
 
 
 
+
     public void executeTreeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
 
         if (!this.transformPlant(world, scheduler, imageStore)) {
@@ -31,5 +32,12 @@ public class Tree extends Plant{
         }
     }
 
-
+    @Override
+    public PImage getCurrentImage(){
+        return this.images.get(this.imageIndex % this.images.size());
+    }
+    @Override
+    public void nextImage() {
+        this.imageIndex = this.imageIndex + 1;
+    }
 }
