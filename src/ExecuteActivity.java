@@ -1,3 +1,3 @@
 public interface ExecuteActivity {
-    void executeActivity();
+    void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler);
 }

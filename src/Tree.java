@@ -23,8 +23,8 @@ public class Tree extends Plant implements ExecuteActivity{
 
 
 
-
-    public void executeTreeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
+    @Override
+    public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
 
         if (!this.transformPlant(world, scheduler, imageStore)) {
 

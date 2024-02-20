@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Fairy implements Entity{
+public class Fairy implements Entity, ExecuteActivity {
     public static final String FAIRY_KEY = "fairy";
     public static final int FAIRY_NUM_PROPERTIES = 2;
     public static final int FAIRY_ACTION_PERIOD = 1;
@@ -74,8 +74,8 @@ public class Fairy implements Entity{
             return false;
         }
     }
-
-    public void executeFairyActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
+    @Override
+    public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
         Optional<Entity> fairyTarget = world.findNearest(this.position, new ArrayList<>(List.of(Stump.class)));
 
         if (fairyTarget.isPresent()) {
