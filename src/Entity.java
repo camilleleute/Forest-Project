@@ -7,9 +7,7 @@ import processing.core.PImage;
  * different kinds of entities that exist.
  */
 public interface Entity {
-    // Instance variables
-    // Instance variables
-    EntityKind kind = null;
+    //EntityKind kind = null;
     String id = null;
 
     Point position = null;
@@ -76,32 +74,32 @@ public interface Entity {
 
 
     public default void scheduleActions(EventScheduler scheduler, WorldModel world, ImageStore imageStore) {
-        switch (this.kind) {
-            case DUDE_FULL:
+        switch (this) {
+            case DudeFull.class:
                 scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
                 scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
                 break;
 
-            case DUDE_NOT_FULL:
+            case DudeNotFull.class:
                 scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
                 scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
                 break;
 
-            case OBSTACLE:
+            case Obstacle.class:
                 scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
                 break;
 
-            case FAIRY:
+            case Fairy.class:
                 scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
                 scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
                 break;
 
-            case SAPLING:
+            case Sapling.class:
                 scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
                 scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
                 break;
 
-            case TREE:
+            case Tree.class:
                 scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
                 scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
                 break;
@@ -112,10 +110,10 @@ public interface Entity {
 
 
     default double getAnimationPeriod() {
-        return switch (this.kind) {
-            case DUDE_FULL, DUDE_NOT_FULL, OBSTACLE, FAIRY, SAPLING, TREE -> this.animationPeriod;
+        return switch (this) {
+            case Dude.class, DUDE_NOT_FULL, Obstacle.class, Fairy.class, Sapling.class, Tree.class -> this.animationPeriod;
             default ->
-                    throw new UnsupportedOperationException(String.format("getAnimationPeriod not supported for %s", this.kind));
+                    throw new UnsupportedOperationException(String.format("getAnimationPeriod not supported for %s", this));
         };
     }
 
@@ -154,11 +152,11 @@ public interface Entity {
 
     // need resource count, though it always starts at 0
     public static Entity createDudeNotFull(String id, Point position, double actionPeriod, double animationPeriod, int resourceLimit, int resourceCount, List<PImage> images) {
-        return new Dude(id, position, actionPeriod, animationPeriod, resourceLimit, resourceCount, images);
+        return new DudeNotFull(id, position, actionPeriod, animationPeriod, resourceLimit, resourceCount, images);
     }
 
     public static Entity createDudeFull(String id, Point position, double actionPeriod, double animationPeriod, int resourceLimit, List<PImage> images) {
-        return new Dude(id, position, actionPeriod, animationPeriod,  resourceLimit, 2, images);
+        return new DudeFull(id, position, actionPeriod, animationPeriod,  resourceLimit, 2, images);
     }
 
 }

@@ -43,7 +43,7 @@ public abstract class Plant implements Entity{
     }
 
     public boolean transformSapling(WorldModel world, EventScheduler scheduler, ImageStore imageStore) {
-        if (this.health <= 0) {
+        if (health <= 0) {
             Entity stump = Entity.createStump(Stump.STUMP_KEY + "_" + this.id, this.position,
                     imageStore.getImageList(Stump.STUMP_KEY));
 
@@ -68,9 +68,9 @@ public abstract class Plant implements Entity{
         return false;
     }
     public boolean transformPlant(WorldModel world, EventScheduler scheduler, ImageStore imageStore) {
-        if (Object instanceof Tree.class) {
+        if (this.getClass() == Tree.class) {
             return this.transformTree(world, scheduler, imageStore);
-        } else if (this.kind == EntityKind.SAPLING) {
+        } else if (this.getClass() == Sapling.class) {
             return this.transformSapling(world, scheduler, imageStore);
         } else {
             throw new UnsupportedOperationException(String.format("transformPlant not supported for %s", this));
@@ -78,7 +78,7 @@ public abstract class Plant implements Entity{
     }
 
     public boolean transformTree(WorldModel world, EventScheduler scheduler, ImageStore imageStore) {
-        if (this.health <= 0) {
+        if (health <= 0) {
             Entity stump = Entity.createStump(Stump.STUMP_KEY + "_" + this.id, this.position, imageStore.getImageList(Stump.STUMP_KEY));
 
             world.removeEntity(scheduler, this);

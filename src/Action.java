@@ -26,9 +26,9 @@ public final class Action {
 
     public void executeActivityAction(EventScheduler scheduler) {
         switch (this.entity.getClass()) {
-            case SAPLING -> this.entity.executeSaplingActivity(this.world, this.imageStore, scheduler);
-            case TREE -> this.entity.executeTreeActivity(this.world, this.imageStore, scheduler);
-            case FAIRY -> this.entity.executeFairyActivity(this.world, this.imageStore, scheduler);
+            case Sapling.class -> this.entity.executeSaplingActivity(this.world, this.imageStore, scheduler);
+            case Tree.class -> this.entity.executeTreeActivity(this.world, this.imageStore, scheduler);
+            case Fairy.class -> this.entity.executeFairyActivity(this.world, this.imageStore, scheduler);
             case DUDE_NOT_FULL -> this.entity.executeDudeNotFullActivity(this.world, this.imageStore, scheduler);
             case DUDE_FULL -> this.entity.executeDudeFullActivity(this.world, this.imageStore, scheduler);
             default ->

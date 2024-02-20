@@ -2,7 +2,7 @@ import processing.core.PImage;
 
 import java.util.List;
 
-public class Tree extends Plant{
+public class Tree extends Plant implements ExecuteActivity{
     public static final String TREE_KEY = "tree";
     public static final int TREE_NUM_PROPERTIES = 3;
     public static final int TREE_ANIMATION_PERIOD = 0;
