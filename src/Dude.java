@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class Dude implements Entity {
+public abstract class Dude implements Entity, ExecuteActivity, NextPosition, ScheduleActions {
     // Static variables
     public static final String DUDE_KEY = "dude";
     public static final int DUDE_NUM_PROPERTIES = 3;
@@ -29,10 +29,10 @@ public abstract class Dude implements Entity {
         this.id = id;
         this.position = position;
         this.images = images;
-        this.resourceLimit = DUDE_LIMIT;
+        this.resourceLimit = resourceLimit;
         this.resourceCount = resourceCount;
         this.actionPeriod = actionPeriod;
-        this.animationPeriod = DUDE_ANIMATION_PERIOD;
+        this.animationPeriod = animationPeriod;
     }
 
     @Override
@@ -57,8 +57,21 @@ public abstract class Dude implements Entity {
         this.imageIndex = this.imageIndex + 1;
     }
 
+    public double getAnimationPeriod() {
+        return animationPeriod;
+    }
 
-    public Point nextPositionDude(WorldModel world, Point destPos) {
+    public double getActionPeriod() {
+        return actionPeriod;
+    }
+
+    public void scheduleActions(EventScheduler scheduler, WorldModel world, ImageStore imageStore) {
+        scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), getActionPeriod());
+        scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
+    }
+
+    @Override
+    public Point nextPosition(WorldModel world, Point destPos) {
         int horiz = Integer.signum(destPos.x - this.position.x);
         Point newPos = new Point(this.position.x + horiz, this.position.y);
 
@@ -72,12 +85,6 @@ public abstract class Dude implements Entity {
         }
 
         return newPos;
-    }
-    public void scheduleActions(EventScheduler scheduler, WorldModel world, ImageStore imageStore) {
-        if (this.getClass().equals(Dude.class)) {
-            scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
-            scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
-        }
     }
 
 }

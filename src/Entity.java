@@ -46,117 +46,93 @@ public interface Entity {
     void setPosition(Point position);
     void nextImage();
     PImage getCurrentImage();
+
+        // Should I put scheduleActions in an interface and implement them in the classes specified below?
+//     default void scheduleActions(EventScheduler scheduler, WorldModel world, ImageStore imageStore) {
+//        switch (this) {
+//            case DudeFull.class: //DUDE_FULL
+//                scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
+//                scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), DudeFull.getAnimationPeriod());
+//                break;
 //
-//    default EntityKind getKind() {
-//        return this.kind;
-//    }
+//            case DudeNotFull.class:
+//                scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
+//                scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
+//                break;
 //
-//    default String getId() {
-//        return id;
-//    }
+//            case Obstacle.class:
+//                scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
+//                break;
 //
-//    default Point getPosition() {
-//        return position;
-//    }
+//            case Fairy.class:
+//                scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
+//                scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
+//                break;
 //
-//    default void setPosition(Point position) {
-//        this.position = position;
-//    }
+//            case Sapling.class:
+//                scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
+//                scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
+//                break;
 //
-//    default void nextImage() {
-//        this.imageIndex = this.imageIndex + 1;
+//            case Tree.class:
+//                scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
+//                scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
+//                break;
+//
+//            default:
+//        }
 //    }
-//    public int getHealth() {
-//        return health;
+
+
+//    default double getAnimationPeriod() {
+//        return switch (this) {
+//            case Dude.class, DUDE_NOT_FULL, Obstacle.class, Fairy.class, Sapling.class, Tree.class -> this.animationPeriod;
+//            default ->
+//                    throw new UnsupportedOperationException(String.format("getAnimationPeriod not supported for %s", this));
+//        };
 //    }
-
-
-
-
-    public default void scheduleActions(EventScheduler scheduler, WorldModel world, ImageStore imageStore) {
-        switch (this) {
-            case DudeFull.class:
-                scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
-                scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
-                break;
-
-            case DudeNotFull.class:
-                scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
-                scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
-                break;
-
-            case Obstacle.class:
-                scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
-                break;
-
-            case Fairy.class:
-                scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
-                scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
-                break;
-
-            case Sapling.class:
-                scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
-                scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
-                break;
-
-            case Tree.class:
-                scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
-                scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
-                break;
-
-            default:
-        }
-    }
-
-
-    default double getAnimationPeriod() {
-        return switch (this) {
-            case Dude.class, DUDE_NOT_FULL, Obstacle.class, Fairy.class, Sapling.class, Tree.class -> this.animationPeriod;
-            default ->
-                    throw new UnsupportedOperationException(String.format("getAnimationPeriod not supported for %s", this));
-        };
-    }
 
     /**
      * Helper method for testing. Preserve this functionality while refactoring.
      */
-    public default String log(){
+     default String log(){
         return this.id.isEmpty() ? null :
                 String.format("%s %d %d %d", this.id, this.position.x, this.position.y, this.imageIndex);
     }
 
-    public static Entity createHouse(String id, Point position, List<PImage> images) {
+     static Entity createHouse(String id, Point position, List<PImage> images) {
         return new House(id, position, images);
     }
 
-    public static Entity createObstacle(String id, Point position, double animationPeriod, List<PImage> images) {
+     static Entity createObstacle(String id, Point position, double animationPeriod, List<PImage> images) {
         return new Obstacle(id, position,animationPeriod, images);
     }
 
-    public static Entity createTree(String id, Point position, double actionPeriod, double animationPeriod, int health, List<PImage> images) {
+     static Entity createTree(String id, Point position, double actionPeriod, double animationPeriod, int health, List<PImage> images) {
         return new Tree(id, position, actionPeriod, animationPeriod, health, images);
     }
 
-    public static Entity createStump(String id, Point position, List<PImage> images) {
+     static Entity createStump(String id, Point position, List<PImage> images) {
         return new Stump(id, position, images);
     }
 
     // health starts at 0 and builds up until ready to convert to Tree
-    public static Entity createSapling(String id, Point position, List<PImage> images, int health) {
-        return new Sapling(id, position, images, health, 1.000, 1.000, 5);
+     static Entity createSapling(String id, Point position, List<PImage> images, int health) {
+        return new Sapling(id, position, images, health, Sapling.SAPLING_ACTION_ANIMATION_PERIOD, Sapling.SAPLING_ACTION_ANIMATION_PERIOD, Sapling.SAPLING_HEALTH_LIMIT);
     }
 
-    public static Entity createFairy(String id, Point position, double actionPeriod, double animationPeriod, List<PImage> images) {
+     static Entity createFairy(String id, Point position, double actionPeriod, double animationPeriod, List<PImage> images) {
         return new Fairy(id, position, actionPeriod, animationPeriod, images);
     }
 
     // need resource count, though it always starts at 0
-    public static Entity createDudeNotFull(String id, Point position, double actionPeriod, double animationPeriod, int resourceLimit, int resourceCount, List<PImage> images) {
+     static Entity createDudeNotFull(String id, Point position, double actionPeriod, double animationPeriod, int resourceLimit, int resourceCount, List<PImage> images) {
         return new DudeNotFull(id, position, actionPeriod, animationPeriod, resourceLimit, resourceCount, images);
     }
 
-    public static Entity createDudeFull(String id, Point position, double actionPeriod, double animationPeriod, int resourceLimit, List<PImage> images) {
+     static Entity createDudeFull(String id, Point position, double actionPeriod, double animationPeriod, int resourceLimit, List<PImage> images) {
         return new DudeFull(id, position, actionPeriod, animationPeriod,  resourceLimit, 2, images);
     }
+
 
 }

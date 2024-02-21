@@ -20,6 +20,13 @@ public class Obstacle implements Entity {
         this.animationPeriod = animationPeriod;
     }
 
+    public double getAnimationPeriod() {
+        return OBSTACLE_ANIMATION_PERIOD;
+    }
+
+    public void scheduleActions(EventScheduler scheduler, WorldModel world, ImageStore imageStore){
+        scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
+    }
     @Override
     public String getId() {
         return id;
