@@ -13,7 +13,7 @@ public abstract class Plant implements Entity, Transform, ScheduleActions {
     protected Point position;
     protected final List<PImage> images;
     protected int imageIndex;
-    protected static int health;
+    protected int health;
 
 
 
@@ -24,22 +24,24 @@ public abstract class Plant implements Entity, Transform, ScheduleActions {
         this.health = health;
     }
 
-    @Override
     public String getId() {
         return id;
     }
 
-    @Override
     public Point getPosition() {
         return position;
     }
-    @Override
+
     public void setPosition(Point position) {
         this.position = position;
     }
 
-    public static int getHealth() {
+    public int getHealth() {
         return health;
+    }
+    public int getImageIndex() { return imageIndex;}
+    public void setHealth(int input){
+        this.health = input;
     }
 
 

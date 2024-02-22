@@ -10,21 +10,26 @@ public class DudeNotFull extends Dude{
                 List<PImage> images) {
         super(id, position, actionPeriod, animationPeriod, resourceLimit, resourceCount, images); }
 
-
-    public void executeDudeNotFullActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
+    @Override
+    public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
         Optional<Entity> target = world.findNearest(this.position, new ArrayList<>(Arrays.asList(Tree.class, Sapling.class)));
 
-        if (target.isEmpty() || !this.moveToNotFull(world, target.get(), scheduler) || !this.transformNotFull(world, scheduler, imageStore)) {
+        if (target.isEmpty() || !this.moveTo(world, target.get(), scheduler) || !this.transformNotFull(world, scheduler, imageStore)) {
             scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
         }
     }
-    public boolean moveToNotFull(WorldModel world, Entity target, EventScheduler scheduler) {
+
+    @Override
+    public boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler) {
         if (this.position.adjacent(target.getPosition())) {
             this.resourceCount += 1;
-            Plant.health--;
+            if (target instanceof Plant) {
+                ((Plant)target).setHealth(((Plant) target).getHealth()-1);
+            }
+
             return true;
         } else {
-            Point nextPos = this.nextPositionDude(world, target.getPosition());
+            Point nextPos = this.nextPosition(world, target.getPosition());
 
             if (!this.position.equals(nextPos)) {
                 world.moveEntity(scheduler, this, nextPos);
@@ -41,7 +46,7 @@ public class DudeNotFull extends Dude{
             scheduler.unscheduleAllEvents(this);
 
             world.addEntity(dude);
-            dude.scheduleActions(scheduler, world, imageStore);
+            ((ScheduleActions)dude).scheduleActions(scheduler, world, imageStore);
 
             return true;
         }

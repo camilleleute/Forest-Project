@@ -7,19 +7,7 @@ import processing.core.PImage;
  * different kinds of entities that exist.
  */
 public interface Entity {
-    //EntityKind kind = null;
-    String id = null;
-
-    Point position = null;
-    int imageIndex = 0;
-    int resourceLimit = 0;
-    int resourceCount = 0;
-    double actionPeriod = 0;
-    double animationPeriod = 0;
-    int health = 0;
-    int healthLimit = 0;
-
-    public static Optional<Entity> nearestEntity(List<Entity> entities, Point pos) {
+    static Optional<Entity> nearestEntity(List<Entity> entities, Point pos) {
         if (entities.isEmpty()) {
             return Optional.empty();
         } else {
@@ -46,6 +34,7 @@ public interface Entity {
     void setPosition(Point position);
     void nextImage();
     PImage getCurrentImage();
+    int getImageIndex();
 
         // Should I put scheduleActions in an interface and implement them in the classes specified below?
 //     default void scheduleActions(EventScheduler scheduler, WorldModel world, ImageStore imageStore) {
@@ -96,8 +85,8 @@ public interface Entity {
      * Helper method for testing. Preserve this functionality while refactoring.
      */
      default String log(){
-        return this.id.isEmpty() ? null :
-                String.format("%s %d %d %d", this.id, this.position.x, this.position.y, this.imageIndex);
+        return this.getId().isEmpty() ? null :
+                String.format("%s %d %d %d", this.getId(), this.getPosition().x, this.getPosition().y, this.getImageIndex());
     }
 
      static Entity createHouse(String id, Point position, List<PImage> images) {

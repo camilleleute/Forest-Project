@@ -26,7 +26,7 @@ public class Tree extends Plant implements ExecuteActivity{
         return animationPeriod;
     }
 
-    @Override
+
     public double getActionPeriod() {
         return actionPeriod;
     }

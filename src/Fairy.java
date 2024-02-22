@@ -24,30 +24,24 @@ public class Fairy implements Entity, ExecuteActivity, NextPosition, ScheduleAct
         this.animationPeriod = animationPeriod;
     }
 
-    @Override
     public String getId() {
         return id;
     }
-    @Override
+    public int getImageIndex() { return imageIndex;}
     public Point getPosition() {
         return position;
     }
 
-    @Override
     public void setPosition(Point position) {
         this.position = position;
     }
-    @Override
     public PImage getCurrentImage(){
         return this.images.get(this.imageIndex % this.images.size());
     }
 
-
-    @Override
     public void nextImage() {
         this.imageIndex = this.imageIndex + 1;
     }
-
 
     public double getAnimationPeriod() {
         return animationPeriod;
@@ -78,13 +72,13 @@ public class Fairy implements Entity, ExecuteActivity, NextPosition, ScheduleAct
 
         return newPos;
     }
-    @Override
+
     public boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler) {
-        if (this.position.adjacent(target.position)) {
+        if (this.position.adjacent(target.getPosition())) {
             world.removeEntity(scheduler, target);
             return true;
         } else {
-            Point nextPos = this.nextPosition(world, target.position);
+            Point nextPos = this.nextPosition(world, target.getPosition());
 
             if (!this.position.equals(nextPos)) {
                 world.moveEntity(scheduler, this, nextPos);

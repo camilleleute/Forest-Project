@@ -15,7 +15,7 @@ public class Animation implements Action {
         this.entity.nextImage();
 
         if (this.repeatCount != 1) {
-            scheduler.scheduleEvent(this.entity, Action.createAnimationAction(this.entity, Math.max(this.repeatCount - 1, 0)), this.entity.getAnimationPeriod());
+            scheduler.scheduleEvent(this.entity, Action.createAnimationAction(this.entity, Math.max(this.repeatCount - 1, 0)), ((ScheduleActions)this.entity).getAnimationPeriod());
         }
     }
 }
