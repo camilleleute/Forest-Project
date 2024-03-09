@@ -3,8 +3,12 @@ import processing.core.PImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
-public class Fairy implements Entity, ExecuteActivity, NextPosition, ScheduleActions {
+public class Fairy implements Entity, ExecuteActivity, NextPosition, ScheduleActions, PathingStrategy {
     public static final String FAIRY_KEY = "fairy";
     public static final int FAIRY_NUM_PROPERTIES = 2;
     public static final int FAIRY_ACTION_PERIOD = 1;
@@ -58,19 +62,14 @@ public class Fairy implements Entity, ExecuteActivity, NextPosition, ScheduleAct
 
     @Override
     public Point nextPosition(WorldModel world, Point destPos) {
-        int horiz = Integer.signum(destPos.x - this.position.x);
-        Point newPos = new Point(this.position.x + horiz, this.position.y);
-
-        if (horiz == 0 || world.isOccupied(newPos)) {
-            int vert = Integer.signum(destPos.y - this.position.y);
-            newPos = new Point(this.position.x, this.position.y + vert);
-
-            if (vert == 0 || world.isOccupied(newPos)) {
-                newPos = this.position;
-            }
+        Point start = getPosition();
+        List<Point> newPos = new SingleStepPathingStrategy().computePath(start, destPos,
+                p -> world.withinBounds(p) && !world.isOccupied(p),(p1, p2) -> p1.adjacent(p2),
+                PathingStrategy.CARDINAL_NEIGHBORS);
+        if (newPos.isEmpty()){
+            return start;
         }
-
-        return newPos;
+        return newPos.get(0);
     }
 
     public boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler) {
@@ -103,5 +102,10 @@ public class Fairy implements Entity, ExecuteActivity, NextPosition, ScheduleAct
         }
 
         scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
+    }
+
+    @Override
+    public List<Point> computePath(Point start, Point end, Predicate<Point> canPassThrough, BiPredicate<Point, Point> withinReach, Function<Point, Stream<Point>> potentialNeighbors) {
+        return null;
     }
 }

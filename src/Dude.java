@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class Dude implements Entity, ExecuteActivity, NextPosition, ScheduleActions {
+public abstract class Dude implements Entity, ExecuteActivity, NextPosition, ScheduleActions, PathingStrategy {
     // Static variables
     public static final String DUDE_KEY = "dude";
     public static final int DUDE_NUM_PROPERTIES = 3;
@@ -69,19 +69,14 @@ public abstract class Dude implements Entity, ExecuteActivity, NextPosition, Sch
 
     @Override
     public Point nextPosition(WorldModel world, Point destPos) {
-        int horiz = Integer.signum(destPos.x - this.position.x);
-        Point newPos = new Point(this.position.x + horiz, this.position.y);
-
-        if (horiz == 0 || world.isOccupied(newPos) && world.getOccupancyCell(newPos).getClass() != Stump.class) {
-            int vert = Integer.signum(destPos.y - this.position.y);
-            newPos = new Point(this.position.x, this.position.y + vert);
-
-            if (vert == 0 || world.isOccupied(newPos) && world.getOccupancyCell(newPos).getClass() != Stump.class) {
-                newPos = this.position;
-            }
+        Point start = getPosition();
+        List<Point> newPos = new SingleStepPathingStrategy().computePath(start, destPos,
+                p -> world.withinBounds(p) && !world.isOccupied(p),(p1, p2) -> p1.adjacent(p2),
+                PathingStrategy.CARDINAL_NEIGHBORS);
+        if (newPos.isEmpty()){
+            return start;
         }
-
-        return newPos;
+        return newPos.get(0);
     }
 
 }

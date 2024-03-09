@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class DudeNotFull extends Dude{
     public DudeNotFull(String id, Point position, double actionPeriod, double animationPeriod, int resourceLimit, int resourceCount,
@@ -54,4 +58,8 @@ public class DudeNotFull extends Dude{
         return false;
     }
 
+    @Override
+    public List<Point> computePath(Point start, Point end, Predicate<Point> canPassThrough, BiPredicate<Point, Point> withinReach, Function<Point, Stream<Point>> potentialNeighbors) {
+        return null;
+    }
 }
