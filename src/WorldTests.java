@@ -108,7 +108,8 @@ public class WorldTests {
 
     @Test
     public void testFairyPathing() {
-        String sav = makeSave(15, 20, "fairy myfairy 10 9 100.0 0.300", "obstacle  9 11 1.126", "obstacle  10 12 1.126", "obstacle  11 11 1.126", "stump  10 14", "stump  0 0", "house  10 8");
+        String sav = makeSave(15, 20, "fairy myfairy 10 9 100.0 0.300", "obstacle  9 11 1.126",
+                "obstacle  10 12 1.126", "obstacle  11 11 1.126", "stump  10 14", "stump  0 0", "house  10 8");
         List<String> entities = VirtualWorld.headlessMain(new String[]{sav}, 5);
 
 
