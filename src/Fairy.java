@@ -8,7 +8,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public class Fairy implements Entity, ExecuteActivity, NextPosition, ScheduleActions, PathingStrategy {
+public class Fairy implements Entity, ExecuteActivity, NextPosition, ScheduleActions {
     public static final String FAIRY_KEY = "fairy";
     public static final int FAIRY_NUM_PROPERTIES = 2;
     public static final int FAIRY_ACTION_PERIOD = 1;
@@ -63,7 +63,7 @@ public class Fairy implements Entity, ExecuteActivity, NextPosition, ScheduleAct
     @Override
     public Point nextPosition(WorldModel world, Point destPos) {
         Point start = getPosition();
-        List<Point> newPos = new SingleStepPathingStrategy().computePath(start, destPos,
+        List<Point> newPos = new AStarPathingStrategy().computePath(start, destPos,
                 p -> world.withinBounds(p) && !world.isOccupied(p),(p1, p2) -> p1.adjacent(p2),
                 PathingStrategy.CARDINAL_NEIGHBORS);
         if (newPos.isEmpty()){
@@ -104,8 +104,4 @@ public class Fairy implements Entity, ExecuteActivity, NextPosition, ScheduleAct
         scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
     }
 
-    @Override
-    public List<Point> computePath(Point start, Point end, Predicate<Point> canPassThrough, BiPredicate<Point, Point> withinReach, Function<Point, Stream<Point>> potentialNeighbors) {
-        return null;
-    }
 }

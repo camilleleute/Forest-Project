@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class Dude implements Entity, ExecuteActivity, NextPosition, ScheduleActions, PathingStrategy {
+public abstract class Dude implements Entity, ExecuteActivity, NextPosition, ScheduleActions {
     // Static variables
     public static final String DUDE_KEY = "dude";
     public static final int DUDE_NUM_PROPERTIES = 3;
@@ -70,7 +70,7 @@ public abstract class Dude implements Entity, ExecuteActivity, NextPosition, Sch
     @Override
     public Point nextPosition(WorldModel world, Point destPos) {
         Point start = getPosition();
-        List<Point> newPos = new SingleStepPathingStrategy().computePath(start, destPos,
+        List<Point> newPos = new AStarPathingStrategy().computePath(start, destPos,
                 p -> world.withinBounds(p) && !world.isOccupied(p),(p1, p2) -> p1.adjacent(p2),
                 PathingStrategy.CARDINAL_NEIGHBORS);
         if (newPos.isEmpty()){
