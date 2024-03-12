@@ -1,8 +1,10 @@
 import processing.core.PImage;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class Fish implements ScheduleActions, Entity {
+public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosition {
 
     public static final String FISH_KEY = "fish";
     private final String id;
@@ -56,6 +58,33 @@ public class Fish implements ScheduleActions, Entity {
 
     public void nextImage() {
         this.imageIndex = this.imageIndex + 1;
+    }
+
+    @Override
+    public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
+        Optional<Entity> fishTarget = world.findNearest(this.position, new ArrayList<>(List.of(Dude.class)));
+
+        if(fishTarget.isPresent())
+        {
+            Point tgtPos = fishTarget.get().getPosition();
+
+            if (this.moveTo(world, fishTarget.get(), scheduler))
+            {
+//                Entity merman = Entity.createMerman()
+            }
+
+        }
+
+    }
+
+    @Override
+    public Point nextPosition(WorldModel world, Point destPos) {
+        return null;
+    }
+
+    @Override
+    public boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler) {
+        return false;
     }
 }
 

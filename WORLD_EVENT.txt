@@ -1,0 +1,43 @@
+how to trigger the event
+{
+- Through mouse click
+    - somewhere withinBounds
+
+
+
+}
+what should happen when the event is triggered
+{
+- Spawns a Fish at the mouse click Point
+
+
+
+}
+what the affected entities should do
+{
+- Find and moveTo the nearest dude
+    - Delete dude and Spawn new Merman
+
+
+
+
+}
+what the new entity is and how it should behave
+{
+- Merman
+    - create new background "lake" at position
+    - only move within "lake" background
+        - towards the fish
+        - kill it
+
+
+
+
+}
+what each partner contributed if applicable
+{
+
+
+
+
+}
