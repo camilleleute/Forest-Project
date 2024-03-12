@@ -4,39 +4,44 @@ import java.util.List;
 import java.util.Objects;
 
 public class Merman implements Entity, ExecuteActivity, NextPosition, ScheduleActions{
-
-
-    @Override
+    private final String id;
+    private Point position;
+    private final List<PImage> images;
+//    private final double actionPeriod;
+//    private final double animationPeriod;
+    private int imageIndex;
+    public Merman(String id, Point position, List<PImage> images) {
+        this.id = id;
+        this.position = position;
+        this.images = images;
+//        this.actionPeriod = actionPeriod;
+//        this.animationPeriod = animationPeriod;
+    }
     public String getId() {
-        return null;
+        return id;
     }
-
-    @Override
+    public int getImageIndex() { return imageIndex;}
     public Point getPosition() {
-        return null;
+        return position;
     }
 
-    @Override
     public void setPosition(Point position) {
-
+        this.position = position;
+    }
+    public PImage getCurrentImage(){
+        return this.images.get(this.imageIndex % this.images.size());
     }
 
-    @Override
     public void nextImage() {
-
+        this.imageIndex = this.imageIndex + 1;
     }
 
-    @Override
-    public PImage getCurrentImage() {
-        return null;
+//    public double getActionPeriod() {
+//        return actionPeriod;
+//    }
+    public double getAnimationPeriod() {
+        return 0.1;
     }
-
-    @Override
-    public int getImageIndex() {
-        return 0;
-    }
-
-    @Override
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
 
     }
@@ -52,19 +57,26 @@ public class Merman implements Entity, ExecuteActivity, NextPosition, ScheduleAc
         }
         return newPos.get(0);
     }
-
+    // kills fairies
     @Override
     public boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler) {
-        return false;
+        if (this.position.adjacent(target.getPosition())) {
+            world.removeEntity(scheduler, target);
+            return true;
+        } else {
+            Point nextPos = this.nextPosition(world, target.getPosition());
+
+            if (!this.position.equals(nextPos)) {
+                world.moveEntity(scheduler, this, nextPos);
+            }
+            return false;
+        }
     }
 
     @Override
     public void scheduleActions(EventScheduler scheduler, WorldModel world, ImageStore imageStore) {
-
+//        scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), getActionPeriod());
+        scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
     }
 
-    @Override
-    public double getAnimationPeriod() {
-        return 0;
-    }
 }

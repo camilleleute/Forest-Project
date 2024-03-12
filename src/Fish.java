@@ -25,16 +25,16 @@ public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosit
     public double getAnimationPeriod() {
         return 0.1;
     }
-
-    //
-//    public double getActionPeriod() {
-//        return actionPeriod;
-//    }
+    private double getActionPeriod() {
+        return 0.1;
+    }
     @Override
     public void scheduleActions(EventScheduler scheduler, WorldModel world, ImageStore imageStore) {
-//        scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), getActionPeriod());
+        scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), getActionPeriod());
         scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
     }
+
+
 
     public String getId() {
         return id;
@@ -70,21 +70,36 @@ public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosit
 
             if (this.moveTo(world, fishTarget.get(), scheduler))
             {
-//                Entity merman = Entity.createMerman()
+                Merman merman = new Merman("merman", tgtPos, imageStore.getImageList("merman"));
+                world.addEntity(merman);
             }
-
         }
-
     }
 
     @Override
     public Point nextPosition(WorldModel world, Point destPos) {
-        return null;
+        Point start = getPosition();
+        List<Point> newPos = new AStarPathingStrategy().computePath(start, destPos,
+                p -> world.withinBounds(p) && !world.isOccupied(p),
+                (p1, p2) -> p1.adjacent(p2),
+                PathingStrategy.CARDINAL_NEIGHBORS);
+        if (newPos.isEmpty()){
+            return start;
+        }
+        return newPos.get(0);
     }
-
     @Override
     public boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler) {
-        return false;
+        if (this.position.adjacent(target.getPosition())) {
+            return true;
+        } else {
+            Point nextPos = this.nextPosition(world, target.getPosition());
+
+            if (!this.position.equals(nextPos)) {
+                world.moveEntity(scheduler, this, nextPos);
+            }
+            return false;
+        }
     }
 }
 
