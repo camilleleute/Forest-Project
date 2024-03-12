@@ -78,6 +78,21 @@ public final class VirtualWorld extends PApplet {
 
             Background lake = new Background("lake", this.imageStore.getImageList("lake"));
             world.setBackgroundCell(pressed, lake);
+            ArrayList<Point> bkgdCells = new ArrayList<>(Arrays.asList(
+                    new Point(pressed.x + 1, pressed.y),
+                    new Point(pressed.x + 1, pressed.y + 1),
+                    new Point(pressed.x - 1, pressed.y),
+                    new Point(pressed.x-1, pressed.y-1),
+                    new Point(pressed.x, pressed.y+1),
+                    new Point(pressed.x, pressed.y-1),
+                    new Point(pressed.x+1, pressed.y-1),
+                    new Point(pressed.x-1, pressed.y+1)
+            ));
+            for (Point p : bkgdCells) {
+                if (world.withinBounds(p)) {
+                    world.setBackgroundCell(p, lake);
+                }
+            }
         }
 
 

@@ -2,7 +2,7 @@ import processing.core.PImage;
 
 import java.util.List;
 
-public class Fish implements ScheduleActions, Entity{
+public class Fish implements ScheduleActions, Entity {
 
     public static final String FISH_KEY = "fish";
     private final String id;
@@ -23,7 +23,8 @@ public class Fish implements ScheduleActions, Entity{
     public double getAnimationPeriod() {
         return 0.1;
     }
-//
+
+    //
 //    public double getActionPeriod() {
 //        return actionPeriod;
 //    }
@@ -33,32 +34,29 @@ public class Fish implements ScheduleActions, Entity{
         scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
     }
 
-
-    @Override
     public String getId() {
-        return this.id;
+        return id;
     }
 
-    @Override
+    public int getImageIndex() {
+        return imageIndex;
+    }
+
     public Point getPosition() {
-        return this.position;
+        return position;
     }
 
     public void setPosition(Point position) {
         this.position = position;
     }
 
-    public void nextImage() {
-        this.imageIndex = this.imageIndex + 1;
-    }
-
-    @Override
     public PImage getCurrentImage() {
         return this.images.get(this.imageIndex % this.images.size());
     }
 
-    @Override
-    public int getImageIndex() {
-        return this.imageIndex;
+    public void nextImage() {
+        this.imageIndex = this.imageIndex + 1;
     }
 }
+
+
