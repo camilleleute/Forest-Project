@@ -6,7 +6,6 @@ import java.util.Optional;
 
 public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosition {
 
-    public static final String FISH_KEY = "fish";
     private final String id;
     private Point position;
     private final List<PImage> images;
