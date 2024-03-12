@@ -33,32 +33,24 @@ public class Fish implements ScheduleActions, Entity{
         scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
     }
 
-
-    @Override
     public String getId() {
-        return this.id;
+        return id;
     }
-
-    @Override
+    public int getImageIndex() { return imageIndex;}
     public Point getPosition() {
-        return this.position;
+        return position;
     }
 
     public void setPosition(Point position) {
         this.position = position;
+    }
+    public PImage getCurrentImage(){
+        return this.images.get(this.imageIndex % this.images.size());
     }
 
     public void nextImage() {
         this.imageIndex = this.imageIndex + 1;
     }
 
-    @Override
-    public PImage getCurrentImage() {
-        return null;
-    }
-
-    @Override
-    public int getImageIndex() {
-        return 0;
-    }
 }
+
