@@ -26,7 +26,7 @@ public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosit
         return 0.1;
     }
     private double getActionPeriod() {
-        return 0.1;
+        return .5;
     }
     @Override
     public void scheduleActions(EventScheduler scheduler, WorldModel world, ImageStore imageStore) {
@@ -74,6 +74,9 @@ public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosit
                 world.addEntity(merman);
             }
         }
+
+        scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.getActionPeriod());
+
     }
 
     @Override
