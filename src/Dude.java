@@ -22,6 +22,7 @@ public abstract class Dude implements Entity, ExecuteActivity, NextPosition, Sch
     protected final double actionPeriod;
     protected final double animationPeriod;
     protected int imageIndex;
+    protected Boolean infected = false;
 
 
     public Dude(String id, Point position, double actionPeriod, double animationPeriod, int resourceLimit, int resourceCount,
