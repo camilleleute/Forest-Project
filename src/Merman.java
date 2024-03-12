@@ -73,6 +73,8 @@ public class Merman implements Entity, ExecuteActivity, NextPosition, ScheduleAc
         }
     }
 
+
+
     @Override
     public void scheduleActions(EventScheduler scheduler, WorldModel world, ImageStore imageStore) {
 //        scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), getActionPeriod());
