@@ -114,6 +114,10 @@ public interface Entity {
         return new Fairy(id, position, actionPeriod, animationPeriod, images);
     }
 
+//    static Entity createFish(String id, Point position, double actionPeriod, double animationPeriod, List<PImage> images) {
+//        return new Fish(id, position, actionPeriod, animationPeriod, images);
+//    }
+
     // need resource count, though it always starts at 0
      static Entity createDudeNotFull(String id, Point position, double actionPeriod, double animationPeriod, int resourceLimit, int resourceCount, List<PImage> images) {
         return new DudeNotFull(id, position, actionPeriod, animationPeriod, resourceLimit, resourceCount, images);
