@@ -72,6 +72,10 @@ public final class VirtualWorld extends PApplet {
         if (!(world.isOccupied(pressed))) {
             Fish fish = new Fish("fish", pressed, this.imageStore.getImageList("fish"));
             this.world.addEntity(fish);
+            fish.scheduleActions(this.scheduler, this.world, this.imageStore);
+
+
+
             Background lake = new Background("lake", this.imageStore.getImageList("lake"));
             world.setBackgroundCell(pressed, lake);
         }

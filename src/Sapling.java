@@ -45,10 +45,10 @@ public class Sapling extends Plant implements ExecuteActivity {
     }
     @Override
     public void executeActivity(WorldModel world, ImageStore imageStore, EventScheduler scheduler) {
+        this.health++;
         if (!this.transform(world, scheduler, imageStore)) {
             scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
         }
-        this.health++;
     }
     @Override
     public boolean transform(WorldModel world, EventScheduler scheduler, ImageStore imageStore) {

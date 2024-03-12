@@ -54,11 +54,11 @@ public class Fish implements ScheduleActions, Entity{
 
     @Override
     public PImage getCurrentImage() {
-        return null;
+        return this.images.get(this.imageIndex % this.images.size());
     }
 
     @Override
     public int getImageIndex() {
-        return 0;
+        return this.imageIndex;
     }
 }
