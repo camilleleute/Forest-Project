@@ -70,14 +70,19 @@ public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosit
 
             if (this.moveTo(world, fishTarget.get(), scheduler))
             {
-                Merman merman = new Merman("merman", tgtPos, imageStore.getImageList("merman"));
-                world.addEntity(merman);
-                ((ScheduleActions)merman).scheduleActions(scheduler, world, imageStore);
+                transformMerman(world, scheduler, imageStore, tgtPos, fishTarget.get());
             }
         }
 
         scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.getActionPeriod());
 
+    }
+
+    public void transformMerman(WorldModel world, EventScheduler scheduler, ImageStore imageStore, Point tgtPos, Entity target) {
+        Merman merman = new Merman("merman", tgtPos, imageStore.getImageList("merman"));
+        world.removeEntity(scheduler, target);
+        world.addEntity(merman);
+        ((ScheduleActions)merman).scheduleActions(scheduler, world, imageStore);
     }
 
     @Override
@@ -95,7 +100,6 @@ public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosit
     @Override
     public boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler) {
         if (this.position.adjacent(target.getPosition())) {
-            world.removeEntity(scheduler, target);
             return true;
         } else {
             Point nextPos = this.nextPosition(world, target.getPosition());
