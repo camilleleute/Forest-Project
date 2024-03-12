@@ -17,7 +17,8 @@ what the affected entities should do
 {
 - Find and moveTo the nearest dude
     - Delete dude and Spawn new Merman
-
+    - Change Dude:
+        - Behavioral change = find nearest water(obstacle) and turn into Merman
 
 
 
@@ -27,8 +28,8 @@ what the new entity is and how it should behave
 - Merman
     - create new background "lake" at position
     - only move within "lake" background
-        - towards the fish
-        - kill it
+        - Targets nearest fairy
+            - Fairy = turns into
 
 
 
@@ -41,3 +42,11 @@ what each partner contributed if applicable
 
 
 }
+
+
+
+NEW CHANGE
+
+mouse click -> spawn "lake" -> Fairy nearest to mouse click point targets "lake" -> Fairy turns to Fish
+    Fish targets Dude -> Dude transforms to Merman -> targets random Point -> spawns Sapling (limit 3 times)
+        Merman turns back into Dude
