@@ -93,6 +93,9 @@ public class Merman implements Entity, ExecuteActivity, NextPosition, ScheduleAc
 //            }
 
                 if (!this.moveTo(world, target.get(), scheduler)) {
+                    Background lake = new Background("lake", imageStore.getImageList("lake"));
+                    world.setBackgroundCell(this.position, lake);
+
                     scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.getActionPeriod());
                 } else if (!this.transformMerman(world, scheduler, imageStore)){
                     Function<Point, Stream<Point>> generateNeighbors = point ->

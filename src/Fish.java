@@ -2,6 +2,7 @@ import processing.core.PImage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosition {
@@ -76,7 +77,9 @@ public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosit
 
                 world.removeEntity(scheduler, this);
             }
+
         } else {
+
             scheduler.unscheduleAllEvents(this);
 
             this.scheduleActions(scheduler, world, imageStore);
@@ -91,6 +94,7 @@ public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosit
                     world.removeEntity(scheduler, this);
                 }
             }
+
 //            scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.getActionPeriod());
         }
 
