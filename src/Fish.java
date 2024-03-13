@@ -73,12 +73,31 @@ public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosit
                 Merman merman = new Merman("merman", tgtPos, imageStore.getImageList("merman"));
                 world.addEntity(merman);
                 ((ScheduleActions)merman).scheduleActions(scheduler, world, imageStore);
+
+                world.removeEntity(scheduler, this);
             }
+        } else {
+            scheduler.unscheduleAllEvents(this);
+
+            this.scheduleActions(scheduler, world, imageStore);
+
+
+            Optional<Entity> mermanTarget = world.findNearest(this.getPosition(), new ArrayList<>(List.of(Obstacle.class)));
+
+            if (mermanTarget.isPresent()) {
+                Point tgtPos = mermanTarget.get().getPosition();
+
+                if (this.moveTo(world, mermanTarget.get(), scheduler)) {
+                    world.removeEntity(scheduler, this);
+                }
+            }
+//            scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.getActionPeriod());
         }
 
         scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.getActionPeriod());
 
     }
+
 
     @Override
     public Point nextPosition(WorldModel world, Point destPos) {
