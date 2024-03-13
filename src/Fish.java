@@ -13,14 +13,10 @@ public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosit
     private final List<PImage> images;
     private int imageIndex;
 
-    //    private final double actionPeriod;
-//    private final double animationPeriod;
     public Fish(String id, Point position, List<PImage> images) {
         this.id = id;
         this.position = position;
         this.images = images;
-//        this.actionPeriod = actionPeriod;
-//        this.animationPeriod = animationPeriod;
     }
 
     public double getAnimationPeriod() {
@@ -34,8 +30,6 @@ public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosit
         scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), getActionPeriod());
         scheduler.scheduleEvent(this, Action.createAnimationAction(this, 0), getAnimationPeriod());
     }
-
-
 
     public String getId() {
         return id;
@@ -68,38 +62,33 @@ public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosit
         if(fishTarget.isPresent())
         {
             Point tgtPos = fishTarget.get().getPosition();
-
             if (this.moveTo(world, fishTarget.get(), scheduler))
             {
                 Merman merman = new Merman("merman", tgtPos, imageStore.getImageList("merman"));
                 world.addEntity(merman);
                 ((ScheduleActions)merman).scheduleActions(scheduler, world, imageStore);
-
                 world.removeEntity(scheduler, this);
+            } else if (world.withinBounds(this.getPosition())){
+                Background lake = new Background("lake", imageStore.getImageList("lake"));
+                world.setBackgroundCell(this.getPosition(), lake);
             }
 
         } else {
-
             scheduler.unscheduleAllEvents(this);
-
             this.scheduleActions(scheduler, world, imageStore);
 
-
             Optional<Entity> mermanTarget = world.findNearest(this.getPosition(), new ArrayList<>(List.of(Obstacle.class)));
-
             if (mermanTarget.isPresent()) {
-                Point tgtPos = mermanTarget.get().getPosition();
-
                 if (this.moveTo(world, mermanTarget.get(), scheduler)) {
                     world.removeEntity(scheduler, this);
+                } else if (world.withinBounds(this.getPosition())){
+                    Background lake = new Background("lake", imageStore.getImageList("lake"));
+                    world.setBackgroundCell(this.getPosition(), lake);
                 }
             }
-
-//            scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.getActionPeriod());
         }
 
         scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.getActionPeriod());
-
     }
 
 

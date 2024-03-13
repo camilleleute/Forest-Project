@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import processing.core.*;
 
@@ -74,44 +75,17 @@ public final class VirtualWorld extends PApplet {
             this.world.addEntity(fish);
             fish.scheduleActions(this.scheduler, this.world, this.imageStore);
 
-
-
-            Background lake = new Background("lake", this.imageStore.getImageList("lake"));
+            Background lake = new Background("lake", this.imageStore.getImageList("lake"));// Center background
             world.setBackgroundCell(pressed, lake);
-            ArrayList<Point> bkgdCells = new ArrayList<>(Arrays.asList(
-                    new Point(pressed.x + 1, pressed.y),
-                    new Point(pressed.x + 1, pressed.y + 1),
-                    new Point(pressed.x - 1, pressed.y),
-                    new Point(pressed.x-1, pressed.y-1),
-                    new Point(pressed.x, pressed.y+1),
-                    new Point(pressed.x, pressed.y-1),
-                    new Point(pressed.x+1, pressed.y-1),
-                    new Point(pressed.x-1, pressed.y+1)
-            ));
+
+            List<Point> bkgdCells = PathingStrategy.ALL_NEIGHBORS.apply(pressed)                // Neighbor backgrounds
+                    .filter(p -> world.withinBounds(p) && !world.isOccupied(p))
+                    .toList();
             for (Point p : bkgdCells) {
-                if (world.withinBounds(p)) {
                     world.setBackgroundCell(p, lake);
-                }
             }
         }
-
-
         System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
-
-
-        Optional<Entity> merman = world.findNearest(pressed, new ArrayList<>(List.of(Merman.class)));
-        if(!(merman.isEmpty())) {
-            Merman merman1 = (Merman) merman.get();
-            System.out.println("merman target is: " + ((Merman) merman.get()).getTarget());
-        }
-
-
-//        Optional<Entity> entityOptional = world.getOccupant(pressed);
-//        if (entityOptional.isPresent()) {
-//            Entity entity = entityOptional.get();
-//            System.out.println(entity.getId() + ": " + entity.getClass() + " : " + ((Plant)entity).getHealth());
-//        }
-//
     }
 
     public void scheduleActions(WorldModel world, EventScheduler scheduler, ImageStore imageStore) {
