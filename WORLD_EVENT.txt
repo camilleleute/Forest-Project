@@ -1,43 +1,42 @@
 how to trigger the event
 {
 - Through mouse click
-    - somewhere withinBounds
-
+    - somewhere withinBounds & unoccupied
 
 
 }
 what should happen when the event is triggered
 {
+- changes nearby area background to "Lake"
 - Spawns a Fish at the mouse click Point
-
-
+    - find Dude and replaces Dude with Merman
+        - Disappears
+    - if no Dude:
+        - find nearest Obstacle
+            - Eats it and disappears
 
 }
 what the affected entities should do
 {
-- Find and moveTo the nearest dude
-    - Delete dude and Spawn new Merman
-    - Change Dude:
-        - Behavioral change = find nearest water(obstacle) and turn into Merman
+- new Merman:
+    - Chooses random point on map (iterate 3 times)
+        - spawns a Sapling nearby
+            - Behavioral change: (after 3 times)
+                - find nearest obstacles and disappears
 
 
 
 }
-what the new entity is and how it should behave
-{
-- Merman
-    - create new background "lake" at position
-    - only move within "lake" background
-        - Targets nearest fairy
-            - Fairy = turns into
 
-
-
-
-}
 what each partner contributed if applicable
 {
+Myu - MermanFull (creation and all behaviors)
+    - Merman     (partial behaviors)
+    - Fish       (partial behaviors)
 
+
+Camille - Merman (creation and partial behaviors)
+        - Fish   (partial behaviors)
 
 
 
@@ -49,4 +48,4 @@ NEW CHANGE
 
 mouse click -> spawn "lake" -> Fairy nearest to mouse click point targets "lake" -> Fairy turns to Fish
     Fish targets Dude -> Dude transforms to Merman -> targets random Point -> spawns Sapling (limit 3 times)
-        Merman turns back into Dude
+        Merman goes to obstacle and disappears

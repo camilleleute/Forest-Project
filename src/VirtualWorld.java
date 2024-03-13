@@ -98,6 +98,14 @@ public final class VirtualWorld extends PApplet {
 
         System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
 
+
+        Optional<Entity> merman = world.findNearest(pressed, new ArrayList<>(List.of(Merman.class)));
+        if(!(merman.isEmpty())) {
+            Merman merman1 = (Merman) merman.get();
+            System.out.println("merman target is: " + ((Merman) merman.get()).getTarget());
+        }
+
+
 //        Optional<Entity> entityOptional = world.getOccupant(pressed);
 //        if (entityOptional.isPresent()) {
 //            Entity entity = entityOptional.get();
