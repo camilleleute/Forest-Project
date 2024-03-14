@@ -135,40 +135,8 @@ public class Merman implements Entity, ExecuteActivity, NextPosition, ScheduleAc
                 this.target = Optional.of(tgtPos);
             }
         }
-
-
-//
-//        Optional<Entity> mermanTarget = world.findNearest(this.position, new ArrayList<>(Arrays.asList(Obstacle.class)));
-//
-//        if(mermanTarget.isPresent()){
-//
-//            if (this.moveTo(world, mermanTarget.get(), scheduler)){
-//
-//                Entity sapling = Entity.createSapling(Sapling.SAPLING_KEY + "_" + "mysapling", mermanTarget.get().getPosition(), imageStore.getImageList(Sapling.SAPLING_KEY), 0);
-//                world.addEntity(sapling);
-////                world.removeEntity(scheduler, this);
-//                this.saplingCount++;
-//                ((ScheduleActions)sapling).scheduleActions(scheduler, world, imageStore);
-//            }
-//
-//            if(this.saplingCount >= 3) {
-//                Entity endTarget = world.findNearest(this.position, new ArrayList<>(Arrays.asList(Obstacle.class))).get();
-//
-//                if (this.moveTo(world, endTarget, scheduler)) {
-//                    world.removeEntity(scheduler, this);
-//                }
-//            }
-//        }
-//        if (this.moveTo(world, mermanTarget, scheduler) || !transformMerman(world, scheduler, imageStore)){
-//        scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.actionPeriod);
     }
 
-//    public Boolean transformMerman(WorldModel world, EventScheduler scheduler, ImageStore imageStore)
-//    {
-//
-//        world.removeEntity(scheduler, this);
-//        return true;
-//    }
 
     public boolean transformMerman(WorldModel world, EventScheduler scheduler, ImageStore imageStore) {
         if (this.saplingCount >= 3) {
@@ -185,28 +153,19 @@ public class Merman implements Entity, ExecuteActivity, NextPosition, ScheduleAc
 
         return false;
     }
-
-//    public Boolean transformMerman(WorldModel world, EventScheduler scheduler, ImageStore imageStore){
-//        if (this.saplingCount >= 3){
-//            return true;
+//
+//
+//    public Point nextPosition(WorldModel world, Point destPos) {
+//        Point start = getPosition();
+//        List<Point> newPos = new AStarPathingStrategy().computePath(start, destPos,
+//                p -> world.withinBounds(p) && !world.isOccupied(p),
+//                (p1, p2) -> p1.adjacent(p2),
+//                PathingStrategy.CARDINAL_NEIGHBORS);
+//        if (newPos.isEmpty()){
+//            return start;
 //        }
-//
-//
-//
+//        return newPos.get(0);
 //    }
-
-
-    public Point nextPosition(WorldModel world, Point destPos) {
-        Point start = getPosition();
-        List<Point> newPos = new AStarPathingStrategy().computePath(start, destPos,
-                p -> world.withinBounds(p) && !world.isOccupied(p),
-                (p1, p2) -> p1.adjacent(p2),
-                PathingStrategy.CARDINAL_NEIGHBORS);
-        if (newPos.isEmpty()){
-            return start;
-        }
-        return newPos.get(0);
-    }
 
     @Override
     public boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler) {

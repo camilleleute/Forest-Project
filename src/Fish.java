@@ -75,6 +75,7 @@ public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosit
                 ((ScheduleActions)merman).scheduleActions(scheduler, world, imageStore);
 
                 world.removeEntity(scheduler, this);
+
             }
         } else {
             scheduler.unscheduleAllEvents(this);
@@ -91,30 +92,17 @@ public class Fish implements ScheduleActions, Entity, ExecuteActivity, NextPosit
                     world.removeEntity(scheduler, this);
                 }
             }
-//            scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.getActionPeriod());
         }
 
         scheduler.scheduleEvent(this, Action.createActivityAction(this, world, imageStore), this.getActionPeriod());
 
     }
 
-
-    @Override
-    public Point nextPosition(WorldModel world, Point destPos) {
-        Point start = getPosition();
-        List<Point> newPos = new AStarPathingStrategy().computePath(start, destPos,
-                p -> world.withinBounds(p) && !world.isOccupied(p),
-                (p1, p2) -> p1.adjacent(p2),
-                PathingStrategy.CARDINAL_NEIGHBORS);
-        if (newPos.isEmpty()){
-            return start;
-        }
-        return newPos.get(0);
-    }
     @Override
     public boolean moveTo(WorldModel world, Entity target, EventScheduler scheduler) {
         if (this.position.adjacent(target.getPosition())) {
-            world.removeEntity(scheduler, target);
+            if (target instanceof Dude){
+            world.removeEntity(scheduler, target);}
             return true;
         } else {
             Point nextPos = this.nextPosition(world, target.getPosition());
