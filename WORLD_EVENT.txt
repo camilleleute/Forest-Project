@@ -30,16 +30,19 @@ what the affected entities should do
 
 what each partner contributed if applicable
 {
-Myu - MermanFull (creation and all behaviors)
-    - Merman     (partial behaviors)
+Myu - Merman     (partial behaviors)
     - Fish       (partial behaviors)
+    - MermanFull (creation and all behaviors)
 
+    - partial mousePressed event
+        - ALL_NEIGHBORS implementation
 
 Camille - Merman (creation and partial behaviors)
         - Fish   (partial behaviors)
 
-
-
+        - All Animation Images
+        - partial mousePressed event
+        - Initial Setup
 }
 
 
