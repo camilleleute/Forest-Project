@@ -12,8 +12,8 @@ what should happen when the event is triggered
     - find Dude and replaces Dude with Merman
         - Disappears
     - if no Dude:
-        - find nearest Obstacle
-            - Eats it and disappears
+        - find nearest Obstacle (river)
+            - "jumps" into it and swims away so fast that you can't see it
 
 }
 what the affected entities should do
@@ -45,10 +45,3 @@ Camille - Merman (creation and partial behaviors)
         - Initial Setup
 }
 
-
-
-NEW CHANGE
-
-mouse click -> spawn "lake" -> Fairy nearest to mouse click point targets "lake" -> Fairy turns to Fish
-    Fish targets Dude -> Dude transforms to Merman -> targets random Point -> spawns Sapling (limit 3 times)
-        Merman goes to obstacle and disappears
